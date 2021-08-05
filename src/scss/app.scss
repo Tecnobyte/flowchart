@@ -1,0 +1,255 @@
+$white: #FFF;
+$black: #000;
+$lightgray: #EEE;
+$gray: #BBB;
+$darkgray: #AAA;
+
+.contextmenu {
+  display: none;
+  font-size: 1rem;
+  position: absolute;
+  min-width: 200px;
+  height: auto;
+  padding: 0;
+  border-radius: 10px;
+  top: 10;
+  left: 10;
+  color: $black;
+  &.show {
+    display: block;
+  }
+  ul {
+    background: $white;
+    margin: 0;
+    padding: 5px;
+    list-style: none;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px 0 rgba($black, 0.2);
+  }
+  li {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    i {
+      margin-right: 5px;
+      color: $gray;
+    }
+    &:hover {
+      background: $lightgray;
+    }
+    &.share,
+    &.send {
+      position: relative;
+    }
+    &.paste {
+      border-bottom: 1px solid $darkgray;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    &.delete {
+      border-top: 1px solid $darkgray;
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+      &:hover {
+        color: red;
+        i {
+          color: red;
+        }
+      }
+    }
+    &.has-sub {
+      position: relative;
+      &:after {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: '\f054';
+        color: $gray;
+        position: absolute;
+        right: 5px;
+      }
+    }
+  }
+  > ul > li {
+    > ul {
+      position: absolute;
+      display: none;
+      top: 5px;
+      right: -200px;
+      min-width: 200px;
+      z-index: 2;
+    }
+    &:hover > ul {
+      display: block;
+    }
+  }
+}
+
+.organigrama * {
+    margin: 0px;
+    padding: 0px;
+    user-select: none;
+  }
+  
+  .organigrama ul {
+    padding-top: 20px;
+    position: relative;
+  }
+  
+  .organigrama li {
+    float: left;
+    text-align: center;
+    list-style-type: none;
+    padding: 20px 5px 0px 5px;
+    position: relative;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+  
+  .organigrama li::before, .organigrama li::after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 50%;
+    border-top: 2px solid #f80;
+    width: calc(54% + 71px);
+    height: 20px;
+  }
+  
+  .organigrama li::after{
+    right: auto;
+    left: 50%;
+    border-left: 2px solid #f80;
+    width: calc(50% + 71px);
+  }
+  
+  .organigrama li:only-child::before, .organigrama li.item:only-child::after {
+    display: none;
+  }
+  
+  .organigrama li:only-child {
+    padding-top: 0;
+  }
+  
+  .organigrama li:first-child::before, .organigrama li:last-child::after{
+    border: 0 none;
+  }
+  
+  .organigrama li:last-child::before{
+    border-right: 2px solid #f80;
+    border-left: 0 none;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
+    border-radius: 0 5px 0 0;
+  }
+  
+  .organigrama li:first-child::after{
+    border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0;
+  }
+  
+  .organigrama ul ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-left: 2px solid #f80;
+    width: 0;
+    height: 20px;
+  }
+  
+  
+  /* ********** ********** ********** */
+  /*              ORGANIGRAMA             */
+  /* ********** ********** ********** */
+  
+  
+  
+  .organigrama li span {
+    border: 2px solid #f80;
+    color: #fff !important;
+    padding: 1em 0.75em;
+    text-decoration: none;
+    color: #333;
+    background-color: rgba(255,255,255,0.5);
+    font-family: arial, verdana, tahoma;
+    font-size: 0.85em;
+    display: inline-block;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-transition: all 500ms;
+    -moz-transition: all 500ms;
+    transition: all 500ms;
+    width: 200px;
+  }
+  
+  .organigrama .staff-content {
+    position: relative;
+    width: 75%;
+    left: 12.5%;
+  }
+  
+  
+  .organigrama .staff-content .staff {
+    position: relative;
+    left: calc(50% + 135px);
+    border: 2px solid #f80;
+    color: black !important;
+    margin-bottom: 10px;
+    padding: 0.75em 0.75em;
+    width: 150px;
+    border-radius: 5px;
+    word-wrap: break-word;
+  }
+  
+  // calc(50% + 135px)
+  
+  .organigrama .staff-content .line {
+    position: absolute;
+    background-color: #f80;
+    height: 130%;
+    width: 2px;
+    left: 50%;
+  }
+  
+  
+  .organigrama .staff-content::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    /* right: 50%; */
+    border-top: 2px dashed #f80;
+    width: 134px;
+    height: 20px;
+  }
+  
+  
+  .organigrama li .content-divisor{
+    width: 100%;
+    background-color: #f80;
+    height: 2px;
+    position: relative;
+    top: 2px;
+  }
+  
+  .organigrama li .content-divisor .divisor{
+    background-color:  #f80;
+    height: 2px;
+    width: 89%;
+    position: absolute;
+    position: relative;
+    left: 7%;
+    top: 22px;
+  }
+  
+  
+  
+  .organigrama li span:hover {
+    border: 1px solid #fff;
+    color: #ddd;
+    background-color: rgba(255,128,0,0.7);
+    display: inline-block;
+    cursor: pointer;
+    transform: scale(1.3);
+  }
