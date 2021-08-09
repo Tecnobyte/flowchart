@@ -1,7 +1,19 @@
 <template>
     <div>
         <div>flowchart vue 2</div>
-        <FlowChart ref="flow" :tree-data="datos_arbol" :callback="feedback"></FlowChart>
+        <FlowChart ref="flow" :tree-data="datos_arbol" :callback="feedback">
+            <!-- <template v-slot:contextmenu>
+                <div class="contextmenu">
+                    <ul>
+                        <li >ADD</li>
+                        <li >EDIT</li>
+                    </ul>
+                </div>
+            </template> -->
+            <template v-slot:node>
+                <img src="http://lorempixel.com/200/200/" alt="Imagen">
+            </template>
+        </FlowChart>
     </div>
 
 </template>
@@ -77,7 +89,36 @@
                     ]
                 },
             }
-        }, methods: {
+        },
+        mounted(){
+            setTimeout(() => {
+                this.datos_arbol.children.push({
+                    name: 'child 1 6',
+                    description: 'description one',
+                    children:[
+                         {
+                                    name: 'child 2 1',
+                                    description: 'description one'
+                                },
+                                {
+                                    name: 'child 2 2',
+                                    description: 'description one'
+                                },
+                                {
+                                    name: 'child 2 3',
+                                    description: 'description one'
+                                },
+                                {
+                                    name: 'child 2 4',
+                                    description: 'description one'
+                                },
+
+                    ]
+                });
+                
+            }, 1000);
+        },
+        methods: {
             feedback(parent,node){
                 // en vez de un callback porque no un emit
                 this.parent = parent;

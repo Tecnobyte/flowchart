@@ -1,44 +1,64 @@
 <template>
-    <li>
-        <span @contextmenu="contextMenu" :style="css"> 
-            {{ node.name }} 
+    <li ref="element" >
+        <span class="flowchart__node" @click="visibleChilds = !visibleChilds" @contextmenu="contextMenu"> 
+            <slot name="node" :parent="parent" :node="node">
+                {{ node.name }} 
+            </slot>
+            
         </span> 
 
-        <!-- <template v-if="node.staffs && node.staffs.length > 0">
-            <div v-for="(staff,index) of node.staffs"  class="staff-content" :key="index">
-                <div class="line"></div>
-                <div class="staff">{{ staff.description }}</div>
-            </div>
-        </template> -->
-
         <template v-if="node.children && node.children.length > 0">
-            <ul >
-                <NodeTree v-for="(child,index) in node.children" :parent="node" :node="child" :callback="callback" :key="index"></NodeTree>    
-            </ul>
+            <div v-show="visibleChilds">
+                <NodeTree v-for="(child,index) in node.children" :parent="node" :node="child" :callback="callback" :key="index" :context-id="contextId">
+                    <template v-if="$scopedSlots.node || $slots.node" v-slot:node="{parent,node}">
+                        <slot name="node" :node="node" :parent="parent" >
+                            {{ node.name }}
+                        </slot>
+                    </template>
+                </NodeTree>    
+            </div>
+            <!-- <div v-show="!visibleChilds">
+                expand
+            </div> -->
         </template>
     </li>
 </template>
 <script>
+ import EventBus from '../eventbus/EventBus';
 export default {
+    
     name:'NodeTree',
     props:{ 
         node: Object,
         parent: Object,
-        callback: Function
-    },
-    created(){
-        // this.css.backgroundColor = this.node.tipo_nivel_organizacional.color;
-        // this.css.border = `1px solid ${this.node.tipo_nivel_organizacional.color}`; 
+        callback: Function,
+        contextId:String
     },
     data(){
         return {
-            css:{
-                border: `1px solid #f80`,
-                backgroundColor : '#666666',
-                color: "#0000",
-                opacity:1
+            visibleChilds:true,
+            height:0
+        }
+    },
+    computed:{
+        css(){
+            return {
+                height:`${this.height}px`,
+                transitionDuration:'1s',
+                overflow:'hidden'
             }
         }
+    },
+    mounted(){
+
+        this.$nextTick(() => {
+            let heighChildren = this.$refs.contentChildren ? this.$refs.contentChildren.offsetHeight : 0;
+            this.height = this.$refs.element.offsetHeight + heighChildren ;
+
+            console.log(this.height);
+            let width = this.$refs.element.offsetWidth;
+            EventBus.$emit('change-width',width);
+        });
     },
     methods:{
         mouseClick(){
@@ -47,12 +67,20 @@ export default {
         },
         contextMenu(e){
             e.preventDefault();
-            if(!Boolean(this.node.staff)){
-                let context = document.querySelector('.contextmenu');
-                context.classList.add('show');
-                context.style.top = e.pageY + 'px';
-                context.style.left = e.pageX + 'px';
-                if(this.callback != undefined) this.callback(this.parent,this.node);
+            let context = document.getElementById(`${this.contextId}`);
+            if(!context) return;
+            context.classList.add('show');
+            context.style.top = e.pageY + 'px';
+            context.style.left = e.pageX + 'px';
+            if(this.callback) this.callback(this.parent,this.node);
+        },
+        show(event){
+            this.visibleChilds = !this.visibleChilds;
+            let contentChildren = this.$refs.contentChildren.offsetHeight;
+            if(!this.visibleChilds){
+                this.height = this.height - contentChildren;
+            }else {
+                this.height =  this.height + contentChildren;
             }
         },
     }

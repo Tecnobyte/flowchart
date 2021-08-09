@@ -1,65 +1,80 @@
 <template>
     <div>
-
         <template v-if="treeData != null">
-            <div id="content" class="organigrama tree " @mousewheel="mouseWheel" :style="css">
-                <div id="parent" :style="{backgroundColor:'#FFFFFF',height: '100%',display:'flex',justifyContent:'center'}">
-                    <ul id="ul" v-if="treeData != null && Object.keys(treeData).length > 0">
-                        <node-tree :node="treeData" :callback="callback"></node-tree>
+            <div ref="tree" class="flowchart__orgchart " @mousewheel="mouseWheel" :style="css">
+                <div :style="{backgroundColor:'#FFFFFF',height: '100%',display:'flex',justifyContent:'center'}">
+                    <ul  v-if="treeData != null && Object.keys(treeData).length > 0">
+                        <node-tree ref="parent" :node="treeData" :callback="callback" :context-id="contextId">
+
+                            <template v-if="$scopedSlots.node || $slots.node" v-slot:node="{node,parent}" >
+                                <slot name="node" :node="node" :parent="parent" >
+                                    {{ node.name }}
+                                </slot>
+                            </template>
+
+                        </node-tree>
                     </ul>
                 </div>
             </div>
 
-            <template>
-                <div class="contextmenu">
+            <slot name="contextmenu">
+                <div v-if="activeContext" :id="contextId" class="contextmenu">
                     <ul>
                         <li >ADD</li>
                         <li >EDIT</li>
                         <li >REMOVE</li>
                     </ul>
                 </div>
-            </template>
-        </template>
-
-        <template v-else>
-            
+            </slot>
         </template>
     </div>
 </template>
 <script>
+    import EventBus from '../eventbus/EventBus';
     import NodeTree from './node.vue';
     // import domtoimage from 'dom-to-image';
     export default {
         name: "Flow",
         props:{
             treeData : Object,
-            callback: Function
+            callback: Function,
+            activeContext:{
+                type:Boolean,
+                default:true
+            }
         },
         components:{
             NodeTree
         },
+        created(){
+            this.contextId = this.generateId;
+            EventBus.$on('change-width',(width) => {
+                this.width+=width;
+            });
+        },
         computed:{
             css(){
                 return{
-                    transform: `perspective(600px) translate3d( ${this.translateX}px, ${this.translateY}px, ${this.translateZ}px)`,
+                    transform: `perspective(600px) translate3d( ${this.translateX}px, ${this.translateY}px, ${this.translateZ}px) scale(${this.zoom})`,
                     position:'relative',
-                    backgroundColor:'#FFFFFF'
+                    backgroundColor:'#FFFFFF',
+                    width:`${this.width}px`
                 }
             },
-        },
-        updated(){
 
-            if(this.calcular){
-                let ul = document.getElementById('ul');
-                this.calcularAncho(ul);
-                let content = document.getElementById('content');
-                content.style.width = `${this.width + (this.width * 0.34)}px`;
+            generateId(){ 
+                let letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r'];
+                let concat = '';
+
+                for(let i = 0;i<= 10;i++){
+                    let index = Math.floor(Math.random() * (letters.length -1) ) + 1;
+                    let char = letters[index];
+                    concat += char;
+                }
+
+                let randomNumber = Math.floor(Math.random() * 100000000) + 1;
+                return `${concat}-${randomNumber}`; 
             }
-
-            this.calcular = false;
-
-            
-            
         },
         data(){
             return {
@@ -75,22 +90,33 @@
                 width:0,
                 nodes:0,
                 calcular:true,
+                zoom:1,
+                contextId:null,
             };
         },
         watch:{
             treeData(newVal, oldVal){
                 this.width = 0;
                 this.nodes = 0;
-                let content = document.getElementById('content');
-                this.calcular = true;
+                this.$nextTick(() => this.calc());
             }
         },
         mounted(){
-            let tree = document.querySelector('.tree');
-            tree.parentNode.addEventListener('DOMMouseScroll',this.mouseWheel);
+            let tree = this.$refs.tree;
+
+            
             document.addEventListener('mousedown', e => {  this.isDragging = (e.which === 1) ? true: false; } );
-            tree.parentNode.addEventListener('mousemove',this.mouseMove);
-            tree.parentNode.addEventListener('touchmove',this.mouseMove);
+            document.addEventListener('mousemove',this.mouseMove);
+            document.addEventListener('touchmove',this.mouseMove);
+
+
+            document.addEventListener('keydown',(e) => {
+                if(e.shiftKey){
+                    document.addEventListener('DOMMouseScroll',this.mouseWheel);
+                }
+            });
+
+            document.addEventListener('keyup',(e) => document.removeEventListener('DOMMouseScroll',this.mouseWheel));
 
             document.addEventListener('mouseup', e => this.isDragging = false);
             tree.parentNode.style.overflow = 'hidden';
@@ -98,13 +124,26 @@
             tree.parentNode.style.display = 'grid';
 
             document.addEventListener('click',(e) => {
-                let context = document.querySelector('.contextmenu');
+                let context = document.getElementById(`${this.contextId}`);
+                if(!context) return;
                 if(context.classList.contains('show')){
                     context.classList.remove('show');
                 }
             });
+
+            this.$nextTick(() => {
+                console.log('hola mundo');
+                this.calc();
+            });
         },
         methods:{
+
+            calc(){
+                let ul = this.$refs.parent;
+                // this.calcularAncho(ul);
+                // let content = this.$refs.tree;
+                // content.style.width = `${this.width + (this.width * 0.34)}px`;
+            },
             calcularAncho(parent){
                 let children = Array.from(parent.children).filter( li => li.localName == 'li');
                 for(let child of children){
@@ -135,6 +174,7 @@
                 e.preventDefault();
                 let delta = e.delta || e.wheelDelta;
                 let zoomOut;
+                
                 if (delta === undefined) {
                     delta = e.detail;
                     zoomOut = delta ? delta < 0 : e.deltaY > 0;
@@ -143,15 +183,9 @@
                     zoomOut = delta ? delta < 0 : e.deltaY > 0;
                 }
                 if (zoomOut) {
-                    if(this.translateZ >= -300 && this.translateZ <= 300){
-                        if(this.translateZ == -300) return;
-                        else this.translateZ -= this.stepZ 
-                    }
+                    this.zoomOut()
                 } else {
-                    if(this.translateZ >= -300 && this.translateZ <= 300) {
-                        if(this.translateZ == 300) return
-                        else this.translateZ += this.stepZ 
-                    } 
+                    this.zoomIn();                    
                 }
             },
             mouseMove(e){
@@ -168,19 +202,17 @@
                     this.initialObjY = this.translateY;
                 }
             },
-            zoomMax(){
-                if(this.translateZ >= -300 && this.translateZ <= 300 ) {
-                    if(this.translateZ == 300) return
-                    this.translateZ = parseInt(this.translateZ) + this.stepZ;
-                }
-            },
-            zoomMin(){
-                if(this.translateZ >= -300 && this.translateZ <= 300){
-                    if(this.translateZ == -300) return
-                    this.translateZ = parseInt(this.translateZ) - this.stepZ;
-                } 
-            },
+            zoomIn(){
 
+                let tempzoom = this.zoom - 0.1;
+                if(tempzoom >= 3) return; 
+                this.zoom+=0.1;
+            },
+            zoomOut(){
+                let tempzoom = this.zoom - 0.1;
+                if(tempzoom <= 0.1) return
+                this.zoom -= 0.1;
+            }
             // imprimirOrganigrama(){
             //     let content = document.getElementById('parent');
             //     domtoimage.toJpeg(content, { quality: 0.95 })
