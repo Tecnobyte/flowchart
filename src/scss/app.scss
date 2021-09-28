@@ -6,6 +6,18 @@ $darkgray: #AAA;
 $midnight: #2c3e50;
 $clouds: #ecf0f1;
 
+.alert{
+  display: flex;
+  width: 100%;
+  height: 2rem;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background-color: #fb8a00dc;
+  border: 1px solid #f57b00;
+  border-radius: 4px;
+  box-shadow: 0 0 0 0 rgba(0,0,0,.2),0 0 0 0 rgba(0,0,0,.14),0 0 0 0 rgba(0,0,0,.12)!important;
+}
 .contextmenu {
   display: none;
   font-size: 1rem;
@@ -17,9 +29,7 @@ $clouds: #ecf0f1;
   top: 10;
   left: 10;
   color: $black;
-  &.show {
-    display: block;
-  }
+  &.show { display: block; }
   ul {
     background: $white;
     margin: 0;
@@ -86,184 +96,197 @@ $clouds: #ecf0f1;
   }
 }
 
+flowchart__orgchart{
+  height: 20rem;
+}
+
 .flowchart__orgchart * {
-    margin: 0px;
-    padding: 0px;
-    user-select: none;
-  }
+  margin: 0px;
+  padding: 0px;
+  user-select: none;
   
-  .flowchart__orgchart div {
-    padding-top: 20px;
-    position: relative;
-  }
-  
-  .flowchart__orgchart li {
-    float: left;
-    text-align: center;
-    list-style-type: none;
-    padding: 20px 5px 0px 5px;
-    position: relative;
-    margin-right: 20px;
-    margin-left: 20px;
-  }
-  
-  .flowchart__orgchart li::before, .flowchart__orgchart li::after {
-    content: '';
-    position: absolute;
-    top: 0px;
-    right: 50%;
-    border-top: 2px solid #068298;
-    width: calc(54% + 71px);
-    height: 18px;
-  }
-  
-  .flowchart__orgchart li::after{
-    right: auto;
-    left: 50%;
-    border-left: 2px solid #068298;
-    width: calc(50% + 71px);
-  }
-  
-  .flowchart__orgchart li:only-child::before, .__orgchart li.item:only-child::after {
-    display: none;
-  }
-  
-  .flowchart__orgchart li:only-child {
-    padding-top: 0;
-  }
-  
-  .flowchart__orgchart li:first-child::before, .flowchart__orgchart li:last-child::after{
-    border: 0 none;
-  }
-  
-  .flowchart__orgchart li:last-child::before{
-    border-right: 2px solid #068298;
-    border-left: 0 none;
-    -webkit-border-radius: 0 5px 0 0;
-    -moz-border-radius: 0 5px 0 0;
-    border-radius: 0 5px 0 0;
-  }
-  
-  .flowchart__orgchart li:first-child::after{
-    border-radius: 5px 0 0 0;
-    -webkit-border-radius: 5px 0 0 0;
-    -moz-border-radius: 5px 0 0 0;
-  }
-  
-  .flowchart__orgchart div div::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    border-left: 2px solid #068298;
-    width: 0;
-    height: 20px;
-  }
-  
-  
-  /* ********** ********** ********** */
-  /*              ORGANIGRAMA             */
-  /* ********** ********** ********** */
-  
-  
-  
-  .flowchart__orgchart li .flowchart__node {
-    border: 2px solid #068298;
-    color: #000 !important;
-    padding: 1em 0.75em;
-    text-decoration: none;
-    color: #333;
-    background-color:  #9be7f4;
-    font-family: arial, verdana, tahoma;
-    font-size: 0.85em;
-    display: inline-block;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-transition: all 500ms;
-    -moz-transition: all 500ms;
-    transition: all 500ms;
-    width: 200px;
-  }
-  
-  .flowchart__orgchart .staff-content {
-    position: relative;
-    width: 75%;
-    left: 12.5%;
-  }
-  
-  
-  .flowchart__orgchart .staff-content .staff {
-    position: relative;
-    left: calc(50% + 135px);
-    border: 2px solid #068298;
-    color: black !important;
-    margin-bottom: 10px;
-    padding: 0.75em 0.75em;
-    width: 150px;
-    border-radius: 5px;
-    word-wrap: break-word;
-  }
-  
-  // calc(50% + 135px)
-  
-  .flowchart__orgchart .staff-content .line {
-    position: absolute;
-    background-color: #068298;
-    height: 130%;
-    width: 2px;
-    left: 50%;
-  }
-  
-  
-  .flowchart__orgchart .staff-content::before{
-    content: '';
-    position: absolute;
-    top: 50%;
-    /* right: 50%; */
-    border-top: 2px dashed #068298;
-    width: 134px;
-    height: 20px;
-  }
-  
-  
-  .flowchart__orgchart li .content-divisor{
-    width: 100%;
-    background-color: #068298;
-    height: 2px;
-    position: relative;
-    top: 2px;
-  }
-  
-  .flowchart__orgchart li .content-divisor .divisor{
-    background-color:  #068298;
-    height: 2px;
-    width: 89%;
-    position: absolute;
-    position: relative;
-    left: 7%;
-    top: 22px;
-  }
-  
-  
-  
-  .flowchart__orgchart .flowchart__node:hover {
-    // border: 1px solid #fff;
-    color: #ddd;
-    background-color: #28b6cf;
-    display: inline-block;
-    cursor: pointer;
-    transform: scale(1.1);
-  }
+}
 
-  .flowchart__node{
-    background-color : #666666;
-    color: #0000;
-    opacity:1
-  }
+.flowchart__orgchart div {
+  padding-top: 20px;
+  position: relative;
+}
 
+.tree_container{
+  display: flex;
+  height: 100%;
+  background-color: #FFFFFF;
+  justify-content:center;
+}
+    
+.flowchart__orgchart li {
+  float: left;
+  text-align: center;
+  list-style-type: none;
+  padding: 20px 5px 0px 5px;
+  position: relative;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+    
+.flowchart__orgchart li::before, .flowchart__orgchart li::after {
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 50%;
+  border-top: 2px solid #068298;
+  width: calc(54% + 71px);
+  height: 18px;
+}
+    
+.flowchart__orgchart li::after{
+  right: auto;
+  left: 50%;
+  border-left: 2px solid #068298;
+  width: calc(50% + 71px);
+}
+    
+.flowchart__orgchart li:only-child::before, .__orgchart li.item:only-child::after {
+  display: none;
+}
+    
+.flowchart__orgchart li:only-child {
+  padding-top: 0;
+}
+    
+.flowchart__orgchart li:first-child::before, .flowchart__orgchart li:last-child::after{
+  border: 0 none;
+}
+    
+.flowchart__orgchart li:last-child::before{
+  border-right: 2px solid #068298;
+  border-left: 0 none;
+  -webkit-border-radius: 0 5px 0 0;
+  -moz-border-radius: 0 5px 0 0;
+  border-radius: 0 5px 0 0;
+}
+    
+.flowchart__orgchart li:first-child::after{
+  border-radius: 5px 0 0 0;
+  -webkit-border-radius: 5px 0 0 0;
+  -moz-border-radius: 5px 0 0 0;
+}
+    
+.flowchart__orgchart div div::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 2px solid #068298;
+  width: 0;
+  height: 20px;
+}
+    
+    
+/* ********** ********** ********** */
+/*              ORGANIGRAMA             */
+/* ********** ********** ********** */
+    
+    
+.flowchart__orgchart li .flowchart__node {
+  border: 2px solid #068298;
+  color: #000 !important;
+  padding: 1em 0.75em;
+  text-decoration: none;
+  color: #333;
+  background-color:  #9be7f4;
+  font-family: arial, verdana, tahoma;
+  font-size: 0.85em;
+  display: inline-block;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-transition: all 500ms;
+  -moz-transition: all 500ms;
+  transition: all 500ms;
+  width: 200px;
+}
+    
+.flowchart__orgchart .staff-content {
+  position: relative;
+  width: 75%;
+  left: 12.5%;
+}
+    
+    
+.flowchart__orgchart .staff-content .staff {
+  position: relative;
+  left: calc(50% + 135px);
+  border: 2px solid #068298;
+  color: black !important;
+  margin-bottom: 10px;
+  padding: 0.75em 0.75em;
+  width: 150px;
+  border-radius: 5px;
+  word-wrap: break-word;
+}
+    
+// calc(50% + 135px)
+.flowchart__orgchart .staff-content .line {
+  position: absolute;
+  background-color: #068298;
+  height: 130%;
+  width: 2px;
+  left: 50%;
+}
 
+.flowchart__orgchart .staff-content::before{
+  content: '';
+  position: absolute;
+  top: 50%;
+  /* right: 50%; */
+  border-top: 2px dashed #068298;
+  width: 134px;
+  height: 20px;
+}
+    
+.flowchart__orgchart li .content-divisor{
+  width: 100%;
+  background-color: #068298;
+  height: 2px;
+  position: relative;
+  top: 2px;
+}
+    
+.flowchart__orgchart li .content-divisor .divisor{
+  background-color:  #068298;
+  height: 2px;
+  width: 89%;
+  position: absolute;
+  position: relative;
+  left: 7%;
+  top: 22px;
+}
 
+.flowchart__orgchart .flowchart__node:hover {
+  // border: 1px solid #fff;
+  color: #ddd;
+  background-color: #28b6cf;
+  display: inline-block;
+  cursor: pointer;
+  transform: scale(1.1);
+}
 
-
-  
+.flowchart__node{
+  background-color : #666666;
+  color: #0000;
+  opacity:1
+}
+.btn_custom{
+  border: none;
+  background-color: #f5f5f5;
+  height: 36px;
+  min-width: 64px;
+  padding: 0 16px;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)!important;
+  position: absolute;
+  width: 10%;
+  left: 90%;
+  top: 5%;
+  z-index: 1;
+}

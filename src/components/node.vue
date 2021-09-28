@@ -48,21 +48,16 @@ export default {
         }
     },
     mounted(){
-
         this.$nextTick(() => {
             let heighChildren = this.$refs.contentChildren ? this.$refs.contentChildren.offsetHeight : 0;
             this.height = this.$refs.element.offsetHeight + heighChildren ;
 
-            console.log(this.height);
+            // console.log(this.height);
             let width = this.$refs.element.offsetWidth;
             EventBus.$emit('change-width',width);
         });
     },
     methods:{
-        mouseClick(){
-            console.log(this.parent);
-            console.log(this.node);
-        },
         contextMenu(e){
             e.preventDefault();
             let context = document.getElementById(`${this.contextId}`);

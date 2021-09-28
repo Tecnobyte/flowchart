@@ -1,18 +1,16 @@
 <template>
     <div>
         <div>flowchart vue 2</div>
-        <FlowChart ref="flow" :tree-data="datos_arbol" :callback="feedback">
-            <!-- <template v-slot:contextmenu>
-                <div class="contextmenu">
-                    <ul>
-                        <li >ADD</li>
-                        <li >EDIT</li>
-                    </ul>
-                </div>
-            </template> -->
-            <template v-slot:node>
-                <img src="http://lorempixel.com/200/200/" alt="Imagen">
+        <FlowChart ref="flow" :tree-data="datos_arbol" :activeContext="true">
+            <template v-slot:contextmenu="{item}">
+                <ul>
+                    <li @click="add(item)">agregar</li>
+                    <li>eliminar</li>
+                </ul>
             </template>
+            <!-- <template v-slot:node>
+                <img src="http://lorempixel.com/200/200/" alt="Imagen">
+            </template> -->
         </FlowChart>
     </div>
 
@@ -96,23 +94,22 @@
                     name: 'child 1 6',
                     description: 'description one',
                     children:[
-                         {
-                                    name: 'child 2 1',
-                                    description: 'description one'
-                                },
-                                {
-                                    name: 'child 2 2',
-                                    description: 'description one'
-                                },
-                                {
-                                    name: 'child 2 3',
-                                    description: 'description one'
-                                },
-                                {
-                                    name: 'child 2 4',
-                                    description: 'description one'
-                                },
-
+                        {
+                            name: 'child 2 1',
+                            description: 'description one'
+                        },
+                        {
+                            name: 'child 2 2',
+                            description: 'description one'
+                        },
+                        {
+                            name: 'child 2 3',
+                            description: 'description one'
+                        },
+                        {
+                            name: 'child 2 4',
+                            description: 'description one'
+                        },
                     ]
                 });
                 
@@ -124,6 +121,10 @@
                 this.parent = parent;
                 this.node = node;
             },
+            add(item){
+                console.log(item)
+
+            }
         }
     }
 </script>
