@@ -17,9 +17,7 @@
                     </template>
                 </NodeTree>    
             </div>
-            <!-- <div v-show="!visibleChilds">
-                expand
-            </div> -->
+            
         </template>
     </li>
 </template>
