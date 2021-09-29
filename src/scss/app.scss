@@ -26,7 +26,7 @@ $clouds: #ecf0f1;
 .contextmenu {
   display: none;
   font-size: 1rem;
-  position: absolute;
+  position: fixed;
   min-width: 200px;
   height: auto;
   padding: 0;
@@ -86,6 +86,7 @@ $clouds: #ecf0f1;
 	overflow: hidden;
   min-width: 100vh;
   min-height: 90%;
+  position: relative;
 
 }
 .flowchart__orgchart{

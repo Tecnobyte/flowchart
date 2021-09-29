@@ -48,6 +48,7 @@ export default {
         }
     },
     mounted(){
+        // a.offsetWidth
         this.$nextTick(() => {
             let heighChildren = this.$refs.contentChildren ? this.$refs.contentChildren.offsetHeight : 0;
             this.height = this.$refs.element.offsetHeight + heighChildren ;
@@ -58,7 +59,6 @@ export default {
     },
     methods:{
         contextMenu(e){
-            console.log(e);
             e.preventDefault();
             let context = document.getElementById(`${this.contextId}`);
             if(!context) return;
