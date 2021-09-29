@@ -4,8 +4,8 @@
             <slot name="node" :parent="parent" :node="node">
                 {{ node.name }} 
             </slot>
-            
         </span> 
+        
 
         <template v-if="node.children && node.children.length > 0">
             <div v-show="visibleChilds">
@@ -17,9 +17,9 @@
                     </template>
                 </NodeTree>    
             </div>
-            
         </template>
     </li>
+    
 </template>
 <script>
  import EventBus from '../eventbus/EventBus';
@@ -52,13 +52,13 @@ export default {
             let heighChildren = this.$refs.contentChildren ? this.$refs.contentChildren.offsetHeight : 0;
             this.height = this.$refs.element.offsetHeight + heighChildren ;
 
-            // console.log(this.height);
             let width = this.$refs.element.offsetWidth;
             EventBus.$emit('change-width',width);
         });
     },
     methods:{
         contextMenu(e){
+            console.log(e);
             e.preventDefault();
             let context = document.getElementById(`${this.contextId}`);
             if(!context) return;

@@ -6,6 +6,11 @@ $darkgray: #AAA;
 $midnight: #2c3e50;
 $clouds: #ecf0f1;
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .alert{
   display: flex;
   width: 100%;
@@ -49,26 +54,6 @@ $clouds: #ecf0f1;
     &:hover {
       background: $lightgray;
     }
-    &.share,
-    &.send {
-      position: relative;
-    }
-    &.paste {
-      border-bottom: 1px solid $darkgray;
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-    &.delete {
-      border-top: 1px solid $darkgray;
-      border-top-right-radius: 0;
-      border-top-left-radius: 0;
-      &:hover {
-        color: red;
-        i {
-          color: red;
-        }
-      }
-    }
     &.has-sub {
       position: relative;
       &:after {
@@ -95,9 +80,16 @@ $clouds: #ecf0f1;
     }
   }
 }
+.content{
+	display: grid;
+	cursor: all-scroll;
+	overflow: hidden;
+  min-width: 100vh;
+  min-height: 90%;
 
-flowchart__orgchart{
-  height: 20rem;
+}
+.flowchart__orgchart{
+    // min-width: 100%;
 }
 
 .flowchart__orgchart * {

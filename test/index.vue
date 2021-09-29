@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="height:40%">
         <div>flowchart vue 2</div>
         <FlowChart ref="flow" :tree-data="datos_arbol" :activeContext="true">
             <template v-slot:contextmenu="{item}">
@@ -112,8 +112,7 @@
                         },
                     ]
                 });
-                
-            }, 1000);
+            }, 3000);
         },
         methods: {
             feedback(parent,node){

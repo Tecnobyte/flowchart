@@ -1,10 +1,9 @@
 <template>
-    <div>
+    <div class="content" oncontextmenu="return false">
         <template v-if="treeData != null && Object.keys(treeData).length > 0">
             <button @click="resetPosition" class="btn_custom buttonReset">center</button>
             <div ref="tree" class="flowchart__orgchart" @mousewheel="mouseWheel" :style="css">
                 <div class="tree_container">
-                    
                     <ul>
                         <node-tree ref="parent" :node="treeData" :callback="feedback" :context-id="contextId">
                             <template v-if="$scopedSlots.node || $slots.node" v-slot:node="{node,parent}" >
@@ -26,6 +25,7 @@
                 </slot>
             </div>
         </template>
+
         <template v-else>
             <slot name="no-data">
                 <div class="alert">
@@ -66,7 +66,6 @@
                     position:'relative',
                     backgroundColor: '#FFFFFF',
                     width: `${this.width}px`,
-                    height: "20rem"
                 }
             },
             generateId(){ 
@@ -111,7 +110,10 @@
             }
         },
         mounted(){
-            let tree = this.$refs.tree;
+            // let tree = this.$refs.tree;
+            // tree.parentNode.style.overflow = 'hidden';
+            // tree.parentNode.style.cursor = 'all-scroll';
+            // tree.parentNode.style.display = 'grid';
 
             document.addEventListener('mousedown', e => {  this.isDragging = (e.which === 1) ? true: false; } );
             document.addEventListener('mousemove',this.mouseMove);
@@ -119,16 +121,12 @@
 
             document.addEventListener('keydown',(e) => {
                 if(e.shiftKey){
-                    document.addEventListener('DOMMouseScroll',this.mouseWheel);
+                    document.addEventListener('wheel',this.mouseWheel);
                 }
             });
 
-            document.addEventListener('keyup',(e) => document.removeEventListener('DOMMouseScroll',this.mouseWheel));
-
+            document.addEventListener('keyup',(e) => document.removeEventListener('wheel',this.mouseWheel));
             document.addEventListener('mouseup', e => this.isDragging = false);
-            tree.parentNode.style.overflow = 'hidden';
-            tree.parentNode.style.cursor = 'all-scroll';
-            tree.parentNode.style.display = 'grid';
 
             document.addEventListener('click',(e) => {
                 let context = document.getElementById(`${this.contextId}`);
@@ -214,7 +212,6 @@
                 }
             },
             zoomIn(){
-
                 let tempzoom = this.zoom - 0.1;
                 if(tempzoom >= 3) return; 
                 this.zoom+=0.1;
@@ -225,29 +222,19 @@
                 this.zoom -= 0.1;
             },
             resetPosition(){
-                let container = document.querySelector(".flowchart__orgchart")
+                // let container = document.querySelector(".flowchart__orgchart")
                 let flow = document.querySelector('.tree_container');
                 // pasos para valibrar la vista
                 // obtener el ancho del contenedor y dividirlo entre 2, asi obtenemos la mital del contenedor
                 // obtener el acho del diagrama y dividirlo entre 2
                 // obtener el area del de los 2 contenedor y dividirlo con su mitad de cada uno
 
-                this.translateX = (flow.children[0].offsetWidth-container.offsetWidth)*2
-                // this.translateX = 0
+                // this.translateX = (flow.children[0].offsetWidth-container.offsetWidth)*2
+                this.translateX = 0;
                 this.translateY = 0;
                 this.translateZ = 0;
-                this.zoom = 0.5;
+                this.zoom = 1;
             }
-            // imprimirOrganigrama(){
-            //     let content = document.getElementById('parent');
-            //     domtoimage.toJpeg(content, { quality: 0.95 })
-            //     .then(function (dataUrl) {
-            //         var link = document.createElement('a');
-            //         link.download = 'organigrama.jpeg';
-            //         link.href = dataUrl;
-            //         link.click();
-            //     });
-            // }
         }
     }
 </script>
