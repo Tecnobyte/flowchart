@@ -6,7 +6,7 @@ module.exports = {
     entry: ['@babel/polyfill','./test/index.js'],
     resolve: {
         alias:{
-            // vue: "@vue/runtime-dom"
+            '@': path.join(__dirname, 'src/')
         }
     },
     module: {

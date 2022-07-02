@@ -1,28 +1,26 @@
 <template>
     <li ref="element" >
-        <span class="flowchart__node" @click="visibleChilds = !visibleChilds" @contextmenu="contextMenu"> 
+        <span @click="mouseClick" class="flowchart__node"> 
             <slot name="node" :parent="parent" :node="node">
                 {{ node.name }} 
             </slot>
-            
         </span> 
 
         <template v-if="node.children && node.children.length > 0">
-            <div v-show="visibleChilds">
-                <NodeTree v-for="(child,index) in node.children" :parent="node" :node="child" :callback="callback" :key="index" :context-id="contextId">
-                    <template v-if="$scopedSlots.node || $slots.node" v-slot:node="{parent,node}">
-                        <slot name="node" :node="node" :parent="parent" >
+            <ul class="parent" v-if="visibleChilds">
+                <NodeTree :hide-children-with-click="hideChildrenWithClick" :level="level + 1" @node-click="(node, parent, level) => $emit('node-click', node, parent, level)" v-for="(child,index) in node.children" :parent="node" :node="child" :key="index" :context-id="contextId">
+                    <template v-if="$scopedSlots.node || $slots.node" v-slot:node="{parent,node,level}">
+                        <slot name="node" :node="node" :parent="parent" :level="level" >
                             {{ node.name }}
                         </slot>
                     </template>
                 </NodeTree>    
-            </div>
+            </ul>
             
         </template>
     </li>
 </template>
 <script>
- import EventBus from '../eventbus/EventBus';
 export default {
     
     name:'NodeTree',
@@ -30,7 +28,15 @@ export default {
         node: Object,
         parent: Object,
         callback: Function,
-        contextId:String
+        contextId:String,
+        level: {
+            type:Number,
+            default: 1
+        },
+        hideChildrenWithClick:{
+            type:Boolean,
+            default:false,
+        }
     },
     data(){
         return {
@@ -47,40 +53,15 @@ export default {
             }
         }
     },
-    mounted(){
-
-        this.$nextTick(() => {
-            let heighChildren = this.$refs.contentChildren ? this.$refs.contentChildren.offsetHeight : 0;
-            this.height = this.$refs.element.offsetHeight + heighChildren ;
-
-            console.log(this.height);
-            let width = this.$refs.element.offsetWidth;
-            EventBus.$emit('change-width',width);
-        });
-    },
     methods:{
-        mouseClick(){
-            console.log(this.parent);
-            console.log(this.node);
-        },
-        contextMenu(e){
-            e.preventDefault();
-            let context = document.getElementById(`${this.contextId}`);
-            if(!context) return;
-            context.classList.add('show');
-            context.style.top = e.pageY + 'px';
-            context.style.left = e.pageX + 'px';
-            if(this.callback) this.callback(this.parent,this.node);
-        },
-        show(event){
-            this.visibleChilds = !this.visibleChilds;
-            let contentChildren = this.$refs.contentChildren.offsetHeight;
-            if(!this.visibleChilds){
-                this.height = this.height - contentChildren;
-            }else {
-                this.height =  this.height + contentChildren;
+        mouseClick(event){
+            if(this.hideChildrenWithClick){
+                this.visibleChilds = !this.visibleChilds;
             }
-        },
+            
+            event.stopPropagation();
+            this.$emit('node-click', this.node, this.parent, this.level);
+        }
     }
 }
 </script>
