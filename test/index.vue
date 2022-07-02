@@ -93,6 +93,10 @@
                 this.node = node;
                 this.level = level;
             },
+            add(item){
+                console.log(item)
+
+            }
         }
     }
 </script>

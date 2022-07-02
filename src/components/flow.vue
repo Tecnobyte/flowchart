@@ -73,11 +73,12 @@
                 calcular:true,
                 zoom:1,
                 contextId:null,
+                parent: null,
+                node:null,
             };
         },
         mounted(){
             document.addEventListener('touchmove',this.mouseMove);
-
 
             document.addEventListener('keydown',(e) => {
                 if(e.shiftKey){
@@ -90,6 +91,11 @@
             document.addEventListener('mouseup', e => this.isDragging = false);
         },
         methods:{
+            feedback(parent,node){
+                // en vez de un callback porque no un emit
+                this.parent = parent;
+                this.node = node;
+            },
 
             onMouseClick(node, parent, level){
                 this.$emit('node-click', node, parent, level);
