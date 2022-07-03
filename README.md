@@ -32,7 +32,8 @@ export default {
 
 | Prop | Description | default |
 | ------ | ------ | ------ |
-| hideChildrenWithClick | This prop do when click in node hide clildren | false |
+| hide-children-with-click | This prop do when click in node hide clildren | false |
+| hide-buttons | Hide buttons center, zoom in and Zoom out | false |
 
 ## Events
 
@@ -41,9 +42,10 @@ export default {
 | node-click | Emit when click node | function(node, parent, level){} |
 
 # Slots
-| Slot | Description |
-| ------ | ------ |
-| node | You can change desing from node |
+| Slot | Description | Scopes |
+| ------ | ------ | ------ |
+| node | You can change desing from node | node, parent, level |
+| options | You can put differents options |  |
 
 ## Examples
 

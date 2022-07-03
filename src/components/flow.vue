@@ -1,15 +1,29 @@
 <template>
     <div 
+    ref="content"
     class="flowchart__content" 
     @mousedown="e => {  isDragging = (e.which === 1) ? true: false; }" 
     @mousemove="mouseMove"
     >   
-        <div class="flowchart__menu__options">
+        <div v-if="tree && tree.length > 0 && !hideButtons" class="flowchart__menu__options">
             <button @click="center" class="pure-material-button-contained">
-                <span :style="{cursor:'pointer',userSelect:'none'}" @click="center">
+                <span :style="{cursor:'pointer',userSelect:'none'}">
                     <font-awesome-icon icon="fa-solid fa-arrows-to-eye" />
                 </span>
             </button>
+            <button @click="zoomIn" class="pure-material-button-contained" :style="{marginLeft:'5px'}">
+                <span :style="{cursor:'pointer',userSelect:'none'}" >
+                    <font-awesome-icon icon="fa-solid fa-magnifying-glass-plus" />
+                </span>
+            </button>
+            <button @click="zoomOut" class="pure-material-button-contained" :style="{marginLeft:'5px'}">
+                <span :style="{cursor:'pointer',userSelect:'none'}" >
+                    <font-awesome-icon icon="fa-solid fa-magnifying-glass-minus" />
+                </span>
+            </button>
+        </div>
+         <div v-if="tree && tree.length > 0" class="flowchart__menu__options" :style="{top: '50px'}">
+            <slot name="options"></slot>
         </div>
         <div class="flowchart__orgchart " @mousewheel="mouseWheel" :style="css">
             <ul >
@@ -41,6 +55,10 @@
                 default:true
             },
             hideChildrenWithClick:{
+                type:Boolean,
+                default:false,
+            },
+            hideButtons:{
                 type:Boolean,
                 default:false,
             }
@@ -83,6 +101,7 @@
             document.addEventListener('touchmove',this.mouseMove);
 
             document.addEventListener('keydown',(e) => {
+                console.log(e.target);
                 if(e.shiftKey){
                     document.addEventListener('DOMMouseScroll',this.mouseWheel);
                 }
