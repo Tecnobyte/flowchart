@@ -101,7 +101,6 @@
             document.addEventListener('touchmove',this.mouseMove);
 
             document.addEventListener('keydown',(e) => {
-                console.log(e.target);
                 if(e.shiftKey){
                     document.addEventListener('DOMMouseScroll',this.mouseWheel);
                 }
