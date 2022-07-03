@@ -1,6 +1,9 @@
 import "./scss/app.scss";
 import FlowChart from "./components/flow.vue";
 
+
+export { FlowChart };
+
 const install = function(Vue){
     if (install.installed) return;
     install.installed = true;
@@ -8,6 +11,5 @@ const install = function(Vue){
 }
 
 export default {
-    install,
-    FlowChart,
+    install
 }

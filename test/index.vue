@@ -7,7 +7,7 @@
                     <div style="widht:100%;background-color:#e0726f;padding:5px" >{{ node.name }}</div>
                     <div>
                         <img style="float:left" width="50" height="50" src="https://www.fillmurray.com/200/200" alt="Imagen">
-                        {{ node.name }} {{ parent ? parent.name : '' }}
+                        {{ node.name }}  {{ parent ? `Parent: ${parent.name}` : '' }}
                     </div>
                 </template> -->
             </flow-chart>
@@ -18,7 +18,9 @@
 </template>
 
 <script>
+    import { FlowChart } from '@/';
     export default {
+        components:{FlowChart},
         data:()=>{
             return{
                 tree: [
@@ -27,57 +29,57 @@
                         description: 'root description',
                         children:[
                             {
-                                name: 'child 1 1',
+                                name: 'child',
                                 description: 'description one',
                                 children:[
                                     {
-                                        name: 'child 2 1',
+                                        name: 'child',
                                         description: 'description one'
                                     },
                                     {
-                                        name: 'child 2 2',
+                                        name: 'child',
                                         description: 'description one'
                                     },
                                     {
-                                        name: 'child 2 3',
+                                        name: 'child',
                                         description: 'description one'
                                     },
                                     {
-                                        name: 'child 2 4',
+                                        name: 'child',
                                         description: 'description one'
                                     },
                                 ]
                             },
                             {
-                                name: 'child 1 2',
+                                name: 'child',
                                 description: 'description'
                             },
                             {
-                                name: 'child 1 3',
+                                name: 'child',
                                 description: 'description one'
                             },
                             {
-                                name: 'child 1 4',
+                                name: 'child',
                                 description: 'description one'
                             },
                             {
-                                name: 'child 1 5',
+                                name: 'child',
                                 description: 'description one',
                                 children:[
                                     {
-                                        name: 'child 2 1',
+                                        name: 'child',
                                         description: 'description one'
                                     },
                                     {
-                                        name: 'child 2 2',
+                                        name: 'child',
                                         description: 'description one'
                                     },
                                     {
-                                        name: 'child 2 3',
+                                        name: 'child',
                                         description: 'description one'
                                     },
                                     {
-                                        name: 'child 2 4',
+                                        name: 'child',
                                         description: 'description one'
                                     },
                                 ]

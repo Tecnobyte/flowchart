@@ -20,7 +20,10 @@ Vue.use(FlowChart);
 
 Implement like component
 ```js
-Vue.use(FlowChart);
+import { FlowChart } from 'vnode-flowchart';
+export default {
+    components:{FlowChart},
+}
 ```
 
 
@@ -43,8 +46,104 @@ Vue.use(FlowChart);
 | node | You can change desing from node |
 
 ## Examples
-[dill]: <https://github.com/joemccann/dillinger>
-[git-repo-url]: <https://github.com/joemccann/dillinger.git>
+
+```vue
+
+<template>
+    <flow-chart v-model="tree" />
+</template>
+<script>
+export default {
+    data:()=>{
+        return{
+            tree: [
+                {
+                    name: "root",
+                    description: 'root description',
+                    children:[
+                        {
+                            name: 'child',
+                            description: 'description one',
+                            children:[
+                                {
+                                    name: 'child',
+                                    description: 'description one'
+                                },
+                                {
+                                    name: 'child',
+                                    description: 'description one'
+                                },
+                                {
+                                    name: 'child',
+                                    description: 'description one'
+                                },
+                                {
+                                    name: 'child',
+                                    description: 'description one'
+                                },
+                            ]
+                        },
+                        {
+                            name: 'child',
+                            description: 'description'
+                        },
+                        {
+                            name: 'child',
+                            description: 'description one'
+                        },
+                        {
+                            name: 'child',
+                            description: 'description one'
+                        },
+                        {
+                            name: 'child',
+                            description: 'description one',
+                            children:[
+                                {
+                                    name: 'child',
+                                    description: 'description one'
+                                },
+                                {
+                                    name: 'child',
+                                    description: 'description one'
+                                },
+                                {
+                                    name: 'child',
+                                    description: 'description one'
+                                },
+                                {
+                                    name: 'child',
+                                    description: 'description one'
+                                },
+                            ]
+                        },
+                    ]
+                },
+                
+            ],
+        }
+    },
+}
+
+</script>
+```
+## 
+![example1](https://github.com/Tecnobyte/flowchart/blob/master/img/Screenshot_1.png?raw=true)
+```vue
+<template>
+    <flow-chart v-model="tree">
+        <template v-slot:node="{node, parent}">
+            <div style="widht:100%;background-color:#e0726f;padding:5px" >{{ node.name }}</div>
+            <div>
+                <img style="float:left" width="50" height="50" src="https://www.fillmurray.com/200/200" alt="Imagen">
+                {{ node.name }} {{ parent ? parent.name : '' }}
+            </div>
+        </template>
+    </flow-chart>
+</template>
+```
+##
+![example2](https://github.com/Tecnobyte/flowchart/blob/master/img/Screenshot_3.png?raw=true)
 
 
 ## License
