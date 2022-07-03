@@ -1,15 +1,15 @@
 <template>
     <div>
         <div>Test Flowchart 2 <button @click="addItem">Add Item</button></div>
-        <div style="width:500px;height:500px">
+        <div>
             <flow-chart v-model="tree">
-                <template v-slot:node="{node, parent}">
+                <!-- <template v-slot:node="{node, parent}">
                     <div style="widht:100%;background-color:#e0726f;padding:5px" >{{ node.name }}</div>
                     <div>
                         <img style="float:left" width="50" height="50" src="https://www.fillmurray.com/200/200" alt="Imagen">
                         {{ node.name }} {{ parent ? parent.name : '' }}
                     </div>
-                </template>
+                </template> -->
             </flow-chart>
         </div>
        
