@@ -5,7 +5,7 @@ $gray: #BBB;
 $darkgray: #AAA;
 $midnight: #2c3e50;
 $clouds: #ecf0f1;
-@import 'material-icons/iconfont/material-icons.css';
+
 
 .flowchart__orgchart * {
   margin: 0px;
@@ -199,7 +199,7 @@ $clouds: #ecf0f1;
   position: absolute;
   right: -5px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   margin: 10px;
   padding: 5px;
   border-radius: 5px;
@@ -228,6 +228,7 @@ $clouds: #ecf0f1;
   outline: none;
   cursor: pointer;
   transition: box-shadow 0.2s;
+  padding: 5px;
 }
 
 .pure-material-button-contained::-moz-focus-inner {

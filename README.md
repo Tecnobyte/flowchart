@@ -47,6 +47,9 @@ export default {
 
 ## Examples
 
+![example3](https://github.com/Tecnobyte/flowchart/blob/master/img/Screenshot_3.png?raw=true)
+
+
 ```vue
 
 <template>

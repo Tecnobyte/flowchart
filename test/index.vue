@@ -2,14 +2,17 @@
     <div>
         <div>Test Flowchart 2 <button @click="addItem">Add Item</button></div>
         <div>
+            <flow-chart v-model="tree" />
+        </div>
+        <div style="margin-top:20px">
             <flow-chart v-model="tree">
-                <!-- <template v-slot:node="{node, parent}">
+                <template v-slot:node="{node, parent}">
                     <div style="widht:100%;background-color:#e0726f;padding:5px" >{{ node.name }}</div>
                     <div>
                         <img style="float:left" width="50" height="50" src="https://www.fillmurray.com/200/200" alt="Imagen">
                         {{ node.name }}  {{ parent ? `Parent: ${parent.name}` : '' }}
                     </div>
-                </template> -->
+                </template>
             </flow-chart>
         </div>
        

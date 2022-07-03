@@ -6,7 +6,9 @@
     >   
         <div class="flowchart__menu__options">
             <button @click="center" class="pure-material-button-contained">
-                <span class="material-icons" :style="{cursor:'pointer',userSelect:'none'}" @click="center">filter_center_focus</span>
+                <span :style="{cursor:'pointer',userSelect:'none'}" @click="center">
+                    <font-awesome-icon icon="fa-solid fa-arrows-to-eye" />
+                </span>
             </button>
         </div>
         <div class="flowchart__orgchart " @mousewheel="mouseWheel" :style="css">
