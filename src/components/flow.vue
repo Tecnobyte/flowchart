@@ -9,21 +9,19 @@
                 <span class="material-icons" :style="{cursor:'pointer',userSelect:'none'}" @click="center">filter_center_focus</span>
             </button>
         </div>
-        <template v-if="treeData != null">
-            <div id="tree" ref="tree" class="flowchart__orgchart " @mousewheel="mouseWheel" :style="css">
-                <ul >
-                    <node-tree v-for="(node, index) in treeData" :hide-children-with-click="hideChildrenWithClick" @node-click="onMouseClick" ref="parent" :node="node" :key="index">
+        <div class="flowchart__orgchart " @mousewheel="mouseWheel" :style="css">
+            <ul >
+                <node-tree v-for="(node, index) in tree" :hide-children-with-click="hideChildrenWithClick" @node-click="onMouseClick" :node="node" :key="index">
 
-                        <template v-if="$scopedSlots.node || $slots.node" v-slot:node="{node,parent, level}" >
-                            <slot name="node" :node="node" :parent="parent" :level="level" >
-                                {{ node.name }}
-                            </slot>
-                        </template>
+                    <template v-if="$scopedSlots.node || $slots.node" v-slot:node="{node,parent, level}" >
+                        <slot name="node" :node="node" :parent="parent" :level="level" >
+                            {{ node.name }}
+                        </slot>
+                    </template>
 
-                    </node-tree>
-                </ul>
-            </div>
-        </template>
+                </node-tree>
+            </ul>
+        </div>
     </div>
 </template>
 <script>
@@ -31,11 +29,10 @@
     export default {
         name: "Flow",
         props:{
-            treeData : {
+            value:{
                 type:Array,
                 default: () => ([])
             },
-            callback: Function,
             activeContext:{
                 type:Boolean,
                 default:true
@@ -59,6 +56,7 @@
         },
         data(){
             return {
+                tree: this.value,
                 translateX:0,
                 translateY:0,
                 translateZ:0,
@@ -91,12 +89,6 @@
             document.addEventListener('mouseup', e => this.isDragging = false);
         },
         methods:{
-            feedback(parent,node){
-                // en vez de un callback porque no un emit
-                this.parent = parent;
-                this.node = node;
-            },
-
             onMouseClick(node, parent, level){
                 this.$emit('node-click', node, parent, level);
             },

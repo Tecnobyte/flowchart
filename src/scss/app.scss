@@ -76,7 +76,7 @@ $clouds: #ecf0f1;
   display: block;
 }
 
-.flowchart__orgchart ul.parent::before {
+.flowchart__orgchart ul.flowchart__content__children::before {
   content: '';
   position: absolute;
   top: 0;
@@ -198,7 +198,6 @@ $clouds: #ecf0f1;
 .flowchart__menu__options{
   position: absolute;
   right: -5px;
-  width: 200px;
   display: flex;
   justify-content: end;
   margin: 10px;
@@ -340,6 +339,7 @@ $clouds: #ecf0f1;
 .flowchart__orgchart .flowchart__node:hover {
   // border: 1px solid #fff;
   color: #ddd;
+  background-color: #ffff !important;
   display: inline-block;
   cursor: pointer;
   transform: scale(1.1);

@@ -1,15 +1,18 @@
 <template>
     <div>
-        <div>Test Flowchart</div>
-        <flow-chart ref="flow" :tree-data="tree" @node-click="feedback">
-            <template v-slot:node="{node, parent}">
-                <div style="widht:100%;background-color:#e0726f;padding:5px" >{{ node.name }}</div>
-                <div>
-                    <img style="float:left" width="50" height="50" src="https://www.fillmurray.com/200/200" alt="Imagen">
-                    {{ node.name }} {{ parent ? parent.name : '' }}
-                </div>
-            </template>
-        </flow-chart>
+        <div>Test Flowchart 2 <button @click="addItem">Add Item</button></div>
+        <div style="width:500px;height:500px">
+            <flow-chart v-model="tree">
+                <template v-slot:node="{node, parent}">
+                    <div style="widht:100%;background-color:#e0726f;padding:5px" >{{ node.name }}</div>
+                    <div>
+                        <img style="float:left" width="50" height="50" src="https://www.fillmurray.com/200/200" alt="Imagen">
+                        {{ node.name }} {{ parent ? parent.name : '' }}
+                    </div>
+                </template>
+            </flow-chart>
+        </div>
+       
     </div>
 
 </template>
@@ -85,17 +88,9 @@
                 ],
             }
         },
-        mounted(){
-        },
         methods: {
-            feedback(parent,node, level){
-                this.parent = parent;
-                this.node = node;
-                this.level = level;
-            },
-            add(item){
-                console.log(item)
-
+            addItem(){
+                this.tree[0].children[0].children.push({name:'Test'})
             }
         }
     }

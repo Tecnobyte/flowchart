@@ -1,14 +1,14 @@
 <template>
     <li ref="element" >
-        <span @click="mouseClick" class="flowchart__node"> 
+        <div @click="mouseClick" class="flowchart__node"> 
             <slot name="node" :parent="parent" :node="node">
                 {{ node.name }} 
             </slot>
-        </span> 
+        </div> 
 
         <template v-if="node.children && node.children.length > 0">
-            <ul class="parent" v-if="visibleChilds">
-                <NodeTree :hide-children-with-click="hideChildrenWithClick" :level="level + 1" @node-click="(node, parent, level) => $emit('node-click', node, parent, level)" v-for="(child,index) in node.children" :parent="node" :node="child" :key="index" :context-id="contextId">
+            <ul class="flowchart__content__children" v-if="visibleChilds">
+                <NodeTree :hide-children-with-click="hideChildrenWithClick" :level="level + 1" @node-click="(node, parent, level) => $emit('node-click', node, parent, level)" v-for="(child,index) in node.children" :parent="node" :node="child" :key="index" >
                     <template v-if="$scopedSlots.node || $slots.node" v-slot:node="{parent,node,level}">
                         <slot name="node" :node="node" :parent="parent" :level="level" >
                             {{ node.name }}
@@ -28,7 +28,6 @@ export default {
         node: Object,
         parent: Object,
         callback: Function,
-        contextId:String,
         level: {
             type:Number,
             default: 1
