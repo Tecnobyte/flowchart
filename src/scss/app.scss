@@ -74,6 +74,7 @@ $clouds: #ecf0f1;
 
 .flowchart__orgchart ul {
   display: block;
+  padding-left: unset;
 }
 
 .flowchart__orgchart ul.flowchart__content__children::before {

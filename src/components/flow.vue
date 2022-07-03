@@ -28,6 +28,7 @@
 </template>
 <script>
     import NodeTree from './node.vue';
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     export default {
         name: "Flow",
         props:{
@@ -45,7 +46,8 @@
             }
         },
         components:{
-            NodeTree
+            NodeTree,
+            'font-awesome-icon': FontAwesomeIcon
         },
         computed:{
             css(){
@@ -89,6 +91,13 @@
             document.addEventListener('keyup',(e) => document.removeEventListener('DOMMouseScroll',this.mouseWheel));
 
             document.addEventListener('mouseup', e => this.isDragging = false);
+        },
+        watch:{
+            value:{
+                handler(value){
+                    this.tree = value;
+                }
+            }
         },
         methods:{
             onMouseClick(node, parent, level){
