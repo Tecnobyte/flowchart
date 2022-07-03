@@ -143,7 +143,7 @@ export default {
 </template>
 ```
 ##
-![example2](https://github.com/Tecnobyte/flowchart/blob/master/img/Screenshot_3.png?raw=true)
+![example2](https://github.com/Tecnobyte/flowchart/blob/master/img/Screenshot_2.png?raw=true)
 
 
 ## License
