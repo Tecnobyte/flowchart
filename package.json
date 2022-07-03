@@ -1,6 +1,6 @@
 {
   "name": "vnode-flowchart",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "src/main.js",
   "scripts": {
