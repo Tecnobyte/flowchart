@@ -4,8 +4,8 @@
         <div>
             <flow-chart v-model="tree" />
         </div>
-        <div style="margin-top:20px">
-            <flow-chart v-model="tree" hide-children-with-click>
+        <div style="margin-top:20px;height:500px">
+            <flow-chart v-model="tree" hide-children-with-click :style="{height:'500px'}">
                 <template v-slot:node="{node}">
                     <div style="widht:100%;background-color:#e0726f;padding:5px" >{{ node.description }}</div>
                 </template>

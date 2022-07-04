@@ -1,10 +1,12 @@
 <template>
-    <div 
-    ref="content"
-    class="flowchart__content" 
-    @mousedown="e => {  isDragging = (e.which === 1) ? true: false; }" 
-    @mousemove="mouseMove"
-    >   
+    <div v-bind="$attrs">
+        <div 
+        ref="content"
+        class="flowchart__content" 
+        @mousedown="e => {  isDragging = (e.which === 1) ? true: false; }" 
+        @mousemove="mouseMove"
+        
+        >   
         <div v-if="tree && tree.length > 0 && !hideButtons" class="flowchart__menu__options">
             <button @click="center" class="pure-material-button-contained">
                 <span :style="{cursor:'pointer',userSelect:'none'}">
@@ -25,7 +27,7 @@
          <div v-if="tree && tree.length > 0" class="flowchart__menu__options" :style="{top: '50px'}">
             <slot name="options"></slot>
         </div>
-        <div class="flowchart__orgchart " @mousewheel="mouseWheel" :style="css">
+        <div class="flowchart__orgchart fit__content" @mousewheel="mouseWheel" :style="css">
             <ul >
                 <node-tree v-for="(node, index) in tree" :hide-children-with-click="hideChildrenWithClick" @node-click="onMouseClick" :node="node" :key="index">
 
@@ -38,7 +40,9 @@
                 </node-tree>
             </ul>
         </div>
+        </div>
     </div>
+    
 </template>
 <script>
     import NodeTree from './node.vue';
@@ -71,8 +75,7 @@
             css(){
                 return{
                     transform: `translate3d( ${this.translateX}px, ${this.translateY}px, ${this.translateZ}px) scale(${this.zoom})`,
-                    position:'relative',
-                    backgroundColor:'#FFFFFF',
+                    position:'relative'
                 }
             },
         },
@@ -98,13 +101,6 @@
             };
         },
         mounted(){
-            document.addEventListener('touchmove',this.mouseMove);
-
-            document.addEventListener('keydown',(e) => {
-                if(e.shiftKey){
-                    document.addEventListener('DOMMouseScroll',this.mouseWheel);
-                }
-            });
 
             document.addEventListener('keyup',(e) => document.removeEventListener('DOMMouseScroll',this.mouseWheel));
 
